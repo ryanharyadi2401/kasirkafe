@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kasir Kedai Kopi</title>
+<style>
+:root{--bg:#EEF1EE;--sf:#fff;--ink:#16241F;--mu:#5E6F68;--ln:#D8DFDA;--br:#1E5B4C;--bi:#fff;--go:#F0B848;--gi:#2A1F05;--rd:#C0392B;
+box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1816;--sf:#17231F;--ink:#E7EFEA;--mu:#8FA39A;--ln:#27382F;--br:#1B4A3F;--bi:#fff;--rd:#E57368;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1816;--sf:#17231F;--ink:#E7EFEA;--mu:#8FA39A;--ln:#27382F;--br:#1B4A3F;--bi:#fff;--rd:#E57368;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.4 "Bricolage Grotesque",system-ui,sans-serif;padding-bottom:150px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:12}
+body.in::before{background:var(--br)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--go);outline-offset:2px}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--br);color:var(--bi);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.appbar small{display:block;opacity:.75;font-size:13px}.appbar b{font-size:20px;font-weight:800}
+.chip{background:rgba(255,255,255,.16);padding:5px 12px;border-radius:99px;font-size:13px;font-weight:600}
+main{padding:12px 14px;max-width:640px;margin:0 auto}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav button{flex:1;padding:8px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--mu)}
+.nav button.on{color:var(--br)}
+body.dk .nav button.on{color:#5FC4A8}
+.nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:19;padding:8px 14px}
+.bar button{width:100%;max-width:640px;margin:0 auto;display:flex;justify-content:space-between;background:var(--go);color:var(--gi);border-radius:14px;padding:14px 18px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.search{width:100%;font:400 16px inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);margin-bottom:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.chips button{flex:none;padding:6px 15px;border-radius:99px;border:1px solid var(--ln);background:var(--sf);font-weight:600;font-size:14px}
+.chips button.on{background:var(--br);color:var(--bi);border-color:var(--br)}
+.prod,.rowb{position:relative;width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.prod:disabled{opacity:.5}.prod:active:not(:disabled){transform:scale(.985)}
+.prod span,.rowb span{flex:1;min-width:0}
+.prod b,.rowb b{display:block;font-weight:600}
+small{color:var(--mu);font-size:13px}
+.av{flex:none;width:44px;height:44px;border-radius:12px;background:hsl(var(--h) 42% 38%);color:#fff;display:grid;place-items:center;font:800 19px inherit;font-style:normal}
+.badge{background:var(--go);color:var(--gi);min-width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font:800 14px inherit;font-style:normal;padding:0 8px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+.sheet{background:var(--sf);width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@media(prefers-reduced-motion:reduce){.sheet{animation:none}}
+h2{margin:0 0 8px;font-size:20px;font-weight:800}h3{margin:16px 0 6px;font-size:16px;font-weight:800}
+.line,.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+.line{border-bottom:1px solid var(--ln)}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:34px;height:34px;border-radius:50%;border:1px solid var(--ln);font-size:20px;line-height:1}
+.qty span{min-width:22px;text-align:center;font-weight:600}
+.tot{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.seg button{padding:10px;border-radius:12px;border:1px solid var(--ln);font-weight:600}
+.seg button.on{background:var(--br);color:var(--bi);border-color:var(--br)}
+label{display:block;font-size:14px;font-weight:600;color:var(--mu);margin:10px 0 0}
+input:not(.search){display:block;width:100%;margin-top:4px;font:600 17px inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--ink)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.quick button{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);font-size:14px;font-weight:600}
+.cta{width:100%;margin-top:14px;padding:15px;border-radius:14px;background:var(--go);color:var(--gi);font-weight:800;font-size:17px}
+.cta:disabled{opacity:.45;cursor:not-allowed}
+.ghost{width:100%;margin-top:8px;padding:12px;border-radius:14px;border:1px solid var(--ln);font-weight:600}
+.ghost.danger{color:var(--rd);border-color:var(--rd)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.stat{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px}
+.stat b{font-size:18px;font-weight:800}.stat small{display:block}
+.stat.big{grid-column:1/-1;background:var(--br);color:var(--bi);border:0}.stat.big small{color:inherit;opacity:.8}.stat.big b{font-size:30px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:4px 14px}
+.card .row{border-bottom:1px solid var(--ln)}.card .row:last-child{border:0}
+.empty{color:var(--mu);padding:14px 0;text-align:center}
+.rc div.r{display:flex;justify-content:space-between;padding:3px 0;font-size:15px}
+.ok{text-align:center}
+.login{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:28px 24px;max-width:420px;margin:0 auto}
+.logo{width:68px;height:68px;border-radius:20px;background:var(--br);color:var(--bi);display:grid;place-items:center;font-size:34px;margin-bottom:16px}
+.login h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.err{color:var(--rd);min-height:22px;margin:10px 0 0;font-weight:600;font-size:14px}
+.toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:600;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div class="bar" id="bar" hidden><button data-act="open"><span id="bn"></span><span id="bt"></span></button></div>
+<div class="scrim" id="scrim"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const LS=(k,d)=>{try{const v=localStorage.getItem("kk_"+k);return v?JSON.parse(v):d}catch(e){return d}};
+const SV=(k,v)=>{try{localStorage.setItem("kk_"+k,JSON.stringify(v))}catch(e){}};
+const D=[["Espresso",18000,"Kopi"],["Americano",22000,"Kopi"],["Cafe Latte",28000,"Kopi"],["Cappuccino",28000,"Kopi"],["Kopi Susu Gula Aren",25000,"Kopi"],["V60 Manual Brew",32000,"Kopi"],["Matcha Latte",30000,"Non-kopi"],["Coklat Panas",26000,"Non-kopi"],["Es Teh Lemon",18000,"Non-kopi"],["Croissant",25000,"Makanan"],["Roti Bakar Coklat",20000,"Makanan"],["Pisang Goreng",18000,"Makanan"]].map((a,i)=>({id:i+1,n:a[0],p:a[1],c:a[2],s:50}));
+let users=LS("users",[]),prods=LS("prods",D),txs=LS("tx",[]),cfg=LS("cfg",{shop:"Kedai Kopi",tax:0}),me=LS("me",null);
+if(!users.find(x=>x.u===me))me=null;
+let tab="kasir",cat="Semua",q="",cart={},pay="Tunai",cash=0,disc=0,note="",armed=false;
+const $=s=>document.querySelector(s);
+const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hue=c=>[...c].reduce((a,x)=>a*31+x.charCodeAt(0),7)%360;
+const role=()=>(users.find(x=>x.u===me)||{}).r;
+const prod=id=>prods.find(p=>p.id==id);
+const cats=()=>[...new Set(prods.map(p=>p.c))];
+const sub=()=>Object.entries(cart).reduce((s,[i,n])=>s+prod(i).p*n,0);
+const dsc=()=>Math.min(disc,sub());
+const tax=()=>Math.round((sub()-dsc())*cfg.tax/100);
+const total=()=>sub()-dsc()+tax();
+const count=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const today=t=>new Date(t).toDateString()===new Date().toDateString();
+const hm=t=>new Date(t).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),1800)};
+async function hash(u,p){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(u+":"+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){return btoa(u+":"+p)}}
+
+const IC={kasir:'<path d="M3 5h2l2 10h10l2-7H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',laporan:'<path d="M5 20V10M12 20V4M19 20v-7"/>',produk:'<path d="M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8"/>',akun:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>'};
+const TT={kasir:"Kasir",laporan:"Laporan",produk:"Produk",akun:"Akun"};
+
+function loginHTML(){const first=!users.length;
+return `<form class="login" onsubmit="doLogin(event)"><div class="logo">☕</div><h1>${first?"Buat akun pemilik":"Masuk ke Kasir"}</h1><small>${first?"Akun ini dipakai untuk mengelola produk, laporan, dan kasir.":esc(cfg.shop)}</small>
+${first?`<label>Nama kedai<input name="shop" value="Kedai Kopi" autocomplete="organization"></label>`:""}
+<label>Nama pengguna<input name="u" autocomplete="username" autocapitalize="none" required></label>
+<label>Kata sandi<input name="pw" type="password" autocomplete="${first?"new-password":"current-password"}" required></label>
+<p class="err" id="err" role="alert"></p><button class="cta" type="submit">${first?"Buat akun dan masuk":"Masuk"}</button></form>`}
+async function doLogin(e){e.preventDefault();const f=e.target,u=f.u.value.trim().toLowerCase(),pw=f.pw.value,er=$("#err");
+ if(!users.length){if(!u||pw.length<4){er.textContent="Isi nama pengguna dan kata sandi minimal 4 karakter.";return}
+  cfg.shop=f.shop.value.trim()||"Kedai Kopi";SV("cfg",cfg);users.push({u,h:await hash(u,pw),r:"pemilik"});SV("users",users)}
+ else{const h=await hash(u,pw);if(!users.find(y=>y.u===u&&y.h===h)){er.textContent="Nama pengguna atau kata sandi salah.";return}}
+ me=u;SV("me",u);tab="kasir";render()}
+
+function plist(){const a=prods.filter(p=>(cat==="Semua"||p.c===cat)&&p.n.toLowerCase().includes(q.toLowerCase()));
+return a.length?a.map(p=>{const n=cart[p.id]||0;return `<button class="prod" data-act="add" data-id="${p.id}" ${p.s<=n?"disabled":""}><i class="av" style="--h:${hue(p.c)}">${esc(p.n[0])}</i><span><b>${esc(p.n)}</b><small>${rp(p.p)} · ${p.s<=0?"Habis":"Stok "+p.s}</small></span>${n?`<i class="badge">${n}</i>`:""}</button>`}).join(""):`<p class="empty">Produk tidak ditemukan.</p>`}
+const VIEW={
+kasir:()=>`<input class="search" id="q" type="search" placeholder="Cari produk" value="${esc(q)}" aria-label="Cari produk"><div class="chips">${["Semua",...cats()].map(c=>`<button data-act="cat" data-v="${esc(c)}" class="${c===cat?"on":""}">${esc(c)}</button>`).join("")}</div><div id="plist">${plist()}</div>`,
+laporan:()=>{const t=txs.filter(x=>today(x.t)),rev=t.reduce((s,x)=>s+x.total,0),sold={};
+ t.forEach(x=>x.items.forEach(i=>sold[i.n]=(sold[i.n]||0)+i.q));
+ const top=Object.entries(sold).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ return `<div class="stats"><div class="stat big"><small>Pendapatan hari ini</small><b>${rp(rev)}</b></div><div class="stat"><small>Transaksi</small><b>${t.length}</b></div><div class="stat"><small>Rata-rata</small><b>${rp(t.length?rev/t.length:0)}</b></div></div>
+ <h3>Menu terlaris</h3><div class="card">${top.length?top.map(([n,k])=>`<div class="row"><span>${esc(n)}</span><b>${k} terjual</b></div>`).join(""):`<div class="empty">Belum ada penjualan hari ini.</div>`}</div>
+ <h3>Riwayat hari ini</h3>${t.length?t.slice().reverse().map(x=>`<button class="rowb" data-act="rc" data-id="${x.id}"><span><b>#${x.id} · ${hm(x.t)}</b><small>${esc(x.pay)} · ${esc(x.kasir)}${x.note?" · "+esc(x.note):""}</small></span><b style="flex:none">${rp(x.total)}</b></button>`).join(""):`<div class="card"><div class="empty">Transaksi muncul di sini setelah ada pembayaran.</div></div>`}`},
+produk:()=>`<button class="cta" style="margin:0 0 12px" data-act="pform">Tambah produk</button>${prods.map(p=>`<button class="prod" data-act="pform" data-id="${p.id}"><i class="av" style="--h:${hue(p.c)}">${esc(p.n[0])}</i><span><b>${esc(p.n)}</b><small>${esc(p.c)} · Stok ${p.s}</small></span><b>${rp(p.p)}</b></button>`).join("")}`,
+akun:()=>{const o=role()==="pemilik";return `<div class="card"><div class="row"><span>Masuk sebagai</span><b>${esc(me)} (${role()})</b></div></div>
+${o?`<h3>Pengaturan kedai</h3><div class="card" style="padding-bottom:14px"><label>Nama kedai<input id="cs" value="${esc(cfg.shop)}"></label><label>Pajak (%)<input id="ct" inputmode="decimal" value="${cfg.tax}"></label><button class="ghost" data-act="csave">Simpan pengaturan</button></div>
+<h3>Tambah kasir</h3><div class="card" style="padding-bottom:14px"><label>Nama pengguna<input id="nu" autocapitalize="none"></label><label>Kata sandi<input id="np" type="password"></label><button class="ghost" data-act="uadd">Tambah akun kasir</button></div>
+<h3>Daftar akun</h3><div class="card">${users.map(x=>`<div class="row"><span>${esc(x.u)}</span><small>${x.r}</small></div>`).join("")}</div>`:""}
+<button class="ghost" style="margin-top:18px" data-act="out">Keluar</button>
+${o?`<button class="ghost danger" data-act="clr">${armed?"Tekan lagi untuk hapus riwayat":"Hapus riwayat transaksi"}</button>`:""}`}};
+
+function render(){const r=$("#root");document.body.classList.toggle("in",!!me);
+ if(!me){r.innerHTML=loginHTML();$("#bar").hidden=true;return}
+ const tabs=role()==="pemilik"?["kasir","laporan","produk","akun"]:["kasir","akun"];
+ if(!tabs.includes(tab))tab="kasir";
+ r.innerHTML=`<div class="appbar"><div><small>${esc(cfg.shop)}</small><b>${TT[tab]}</b></div><span class="chip">${esc(me)}</span></div><main>${VIEW[tab]()}</main><nav class="nav">${tabs.map(t=>`<button data-act="tab" data-v="${t}" class="${t===tab?"on":""}"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[t]}</svg>${TT[t]}</button>`).join("")}</nav>`;
+ const n=count();$("#bar").hidden=!(tab==="kasir"&&n>0);$("#bn").textContent=n+" item · Lihat pesanan";$("#bt").textContent=rp(total())}
+
+const open=h=>{$("#sheet").innerHTML=h;$("#scrim").classList.add("on")},close=()=>$("#scrim").classList.remove("on");
+function cartSheet(){const t=total(),opts=[20000,50000,100000,200000].filter(v=>v>=t).slice(0,3);
+ return `<h2>Pesanan</h2>${Object.entries(cart).map(([i,n])=>{const p=prod(i);return `<div class="line"><div><b>${esc(p.n)}</b><small>${rp(p.p)}</small></div><div class="qty"><button data-act="dec" data-id="${i}" aria-label="Kurangi ${esc(p.n)}">−</button><span>${n}</span><button data-act="inc" data-id="${i}" aria-label="Tambah ${esc(p.n)}" ${p.s<=n?"disabled":""}>+</button></div></div>`}).join("")}
+<label>Catatan atau nomor meja<input id="nt" value="${esc(note)}"></label><label>Diskon (Rp)<input id="dc" inputmode="numeric" value="${disc||""}" placeholder="0"></label>
+<div class="row"><span>Subtotal</span><span>${rp(sub())}</span></div>${dsc()?`<div class="row"><span>Diskon</span><span>−${rp(dsc())}</span></div>`:""}${cfg.tax?`<div class="row"><span>Pajak ${cfg.tax}%</span><span>${rp(tax())}</span></div>`:""}
+<div class="row"><b>Total</b><span class="tot">${rp(t)}</span></div>
+<div class="seg">${["Tunai","QRIS","Kartu"].map(m=>`<button data-act="pay" data-v="${m}" class="${m===pay?"on":""}">${m}</button>`).join("")}</div>
+${pay==="Tunai"?`<input id="cash" inputmode="numeric" placeholder="Uang diterima" value="${cash||""}" aria-label="Uang diterima"><div class="quick"><button data-act="quick" data-v="${t}">Uang pas</button>${opts.map(v=>`<button data-act="quick" data-v="${v}">${rp(v)}</button>`).join("")}</div><div class="row"><span>Kembalian</span><b id="chg"></b></div>`:`<small>Pembayaran ${pay} dianggap lunas sebesar total.</small>`}
+<button class="cta" id="go" data-act="submit">Bayar</button><button class="ghost" data-act="close">Tambah menu</button>`}
+function upd(){const t=total(),g=$("#go");if(g)g.disabled=pay==="Tunai"&&cash<t;const c=$("#chg");if(c)c.textContent=cash>=t?rp(cash-t):cash?"Kurang "+rp(t-cash):"–"}
+const showCart=()=>{open(cartSheet());upd()};
+function rcText(x){return [cfg.shop,"Struk #"+x.id+" · "+new Date(x.t).toLocaleString("id-ID"),"Kasir: "+x.kasir+(x.note?" · "+x.note:""),"",...x.items.map(i=>i.q+"x "+i.n+"  "+rp(i.p*i.q)),"","Subtotal  "+rp(x.sub),...(x.disc?["Diskon  -"+rp(x.disc)]:[]),...(x.tax?["Pajak  "+rp(x.tax)]:[]),"Total  "+rp(x.total),x.pay+"  "+rp(x.cash),"Kembali  "+rp(x.change)].join("\n")}
+function rcSheet(x,done){const R=(a,b,s)=>`<div class="r"${s?` style="${s}"`:""}><span>${a}</span><span>${b}</span></div>`;
+ open(`<div class="rc">${done?`<div class="ok"><h2>Pembayaran berhasil</h2><small>Kembalian</small><div class="tot" style="margin-bottom:8px">${rp(x.change)}</div></div>`:`<h2>Struk #${x.id}</h2>`}
+ <small>${esc(cfg.shop)} · ${new Date(x.t).toLocaleString("id-ID")} · ${esc(x.kasir)}${x.note?" · "+esc(x.note):""}</small><div style="margin:10px 0">${x.items.map(i=>R(i.q+"× "+esc(i.n),rp(i.p*i.q))).join("")}${R("Subtotal",rp(x.sub))}${x.disc?R("Diskon","−"+rp(x.disc)):""}${x.tax?R("Pajak",rp(x.tax)):""}${R("<b>Total</b>","<b>"+rp(x.total)+"</b>")}${R(esc(x.pay),rp(x.cash))}</div></div>
+ <button class="ghost" data-act="share" data-id="${x.id}">Bagikan struk</button><button class="cta" data-act="close">${done?"Pesanan baru":"Tutup"}</button>`)}
+function submit(){const t=total(),got=pay==="Tunai"?cash:t;if(!t||got<t)return;
+ const x={id:(txs.length?txs[txs.length-1].id:0)+1,t:Date.now(),kasir:me,note:note.trim(),items:Object.entries(cart).map(([i,n])=>({n:prod(i).n,q:n,p:prod(i).p})),sub:sub(),disc:dsc(),tax:tax(),total:t,pay,cash:got,change:got-t};
+ Object.entries(cart).forEach(([i,n])=>prod(i).s-=n);SV("prods",prods);txs.push(x);SV("tx",txs);
+ cart={};cash=0;disc=0;note="";pay="Tunai";render();rcSheet(x,true)}
+
+document.addEventListener("click",async e=>{
+ const b=e.target.closest("[data-act]");if(!b){if(e.target.id==="scrim")close();return}
+ const a=b.dataset.act,id=b.dataset.id,v=b.dataset.v;
+ if(a==="tab"){tab=v;armed=false;render();scrollTo(0,0)}
+ else if(a==="cat"){cat=v;render()}
+ else if(a==="add"){cart[id]=(cart[id]||0)+1;render()}
+ else if(a==="open")showCart();
+ else if(a==="close")close();
+ else if(a==="inc"){cart[id]++;render();showCart()}
+ else if(a==="dec"){if(--cart[id]<=0)delete cart[id];render();count()?showCart():close()}
+ else if(a==="pay"){pay=v;showCart()}
+ else if(a==="quick"){cash=+v;showCart()}
+ else if(a==="submit")submit();
+ else if(a==="rc")rcSheet(txs.find(x=>x.id==id),false);
+ else if(a==="share"){const s=rcText(txs.find(x=>x.id==id));try{if(navigator.share)await navigator.share({text:s});else{await navigator.clipboard.writeText(s);toast("Struk disalin")}}catch(er){toast("Struk tidak dapat dibagikan")}}
+ else if(a==="pform"){const p=prod(id)||{n:"",p:"",c:"Kopi",s:50};
+  open(`<h2>${id?"Ubah produk":"Produk baru"}</h2><label>Nama produk<input id="pn" value="${esc(p.n)}"></label><label>Harga (Rp)<input id="pp" inputmode="numeric" value="${p.p}"></label><label>Kategori<input id="pc" list="cl" value="${esc(p.c)}"></label><datalist id="cl">${cats().map(c=>`<option value="${esc(c)}">`).join("")}</datalist><label>Stok<input id="ps" inputmode="numeric" value="${p.s}"></label><button class="cta" data-act="psave" data-id="${id||""}">Simpan produk</button>${id?`<button class="ghost danger" data-act="pdel" data-id="${id}">Hapus produk</button>`:""}<button class="ghost" data-act="close">Batal</button>`)}
+ else if(a==="psave"){const n=$("#pn").value.trim(),pr=+$("#pp").value.replace(/\D/g,""),c=$("#pc").value.trim()||"Lainnya",s=+$("#ps").value.replace(/\D/g,"");
+  if(!n||!pr){toast("Isi nama dan harga");return}
+  const p=prod(id);if(p)Object.assign(p,{n,p:pr,c,s});else prods.push({id:Date.now(),n,p:pr,c,s});
+  SV("prods",prods);close();render()}
+ else if(a==="pdel"){prods=prods.filter(p=>p.id!=id);delete cart[id];SV("prods",prods);close();render()}
+ else if(a==="csave"){cfg.shop=$("#cs").value.trim()||"Kedai Kopi";cfg.tax=Math.max(0,Math.min(100,+$("#ct").value.replace(",",".")||0));SV("cfg",cfg);render();toast("Pengaturan disimpan")}
+ else if(a==="uadd"){const u=$("#nu").value.trim().toLowerCase(),pw=$("#np").value;
+  if(!u||pw.length<4){toast("Isi nama dan sandi minimal 4 karakter");return}
+  if(users.find(x=>x.u===u)){toast("Nama pengguna sudah dipakai");return}
+  users.push({u,h:await hash(u,pw),r:"kasir"});SV("users",users);render();toast("Akun kasir ditambahkan")}
+ else if(a==="out"){me=null;SV("me",null);cart={};render()}
+ else if(a==="clr"){if(armed){txs=[];SV("tx",txs);armed=false;toast("Riwayat dihapus")}else armed=true;render()}
+});
+document.addEventListener("input",e=>{const i=e.target.id;
+ if(i==="q"){q=e.target.value;$("#plist").innerHTML=plist()}
+ else if(i==="cash"){cash=+e.target.value.replace(/\D/g,"")||0;upd()}});
+document.addEventListener("change",e=>{const i=e.target.id;
+ if(i==="dc"){disc=+e.target.value.replace(/\D/g,"")||0;render();showCart()}
+ else if(i==="nt")note=e.target.value});
+render();
+</script>
+</body>
+</html>
