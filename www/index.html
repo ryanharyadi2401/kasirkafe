@@ -4,78 +4,94 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kasir Kedai Kopi</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EEF1EE;--sf:#fff;--ink:#16241F;--mu:#5E6F68;--ln:#D8DFDA;--br:#1E5B4C;--bi:#fff;--go:#F0B848;--gi:#2A1F05;--rd:#C0392B;
-box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1816;--sf:#17231F;--ink:#E7EFEA;--mu:#8FA39A;--ln:#27382F;--br:#1B4A3F;--bi:#fff;--rd:#E57368;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0F1816;--sf:#17231F;--ink:#E7EFEA;--mu:#8FA39A;--ln:#27382F;--br:#1B4A3F;--bi:#fff;--rd:#E57368;color-scheme:dark}
+:root{--bg:#F4F7FB;--sf:#fff;--ink:#14213D;--mu:#66768C;--ln:#E5EAF2;--br:#08907D;--ac:#08907D;--go:#FFB020;--gi:#3A2600;--rd:#D64545;--pl:93%;--sh:0 6px 20px rgba(20,33,61,.07);--hero:#CDF4EC;--grad:linear-gradient(135deg,#067A6A,#0BA58F);box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1626;--sf:#16213A;--ink:#EAF0FA;--mu:#97A5BD;--ln:#243252;--ac:#4FE3CB;--pl:26%;--sh:none;--hero:#12352F;--rd:#FF7A70;--grad:linear-gradient(135deg,#0E8F7D,#13B39D);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1626;--sf:#16213A;--ink:#EAF0FA;--mu:#97A5BD;--ln:#243252;--ac:#4FE3CB;--pl:26%;--sh:none;--hero:#12352F;--rd:#FF7A70;--grad:linear-gradient(135deg,#0E8F7D,#13B39D);color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.4 "Bricolage Grotesque",system-ui,sans-serif;padding-bottom:150px}
+body{margin:0;background-color:var(--bg);color:var(--ink);font:500 15px/1.45 "Plus Jakarta Sans",system-ui,sans-serif;padding-bottom:150px}
+body:not(.in){background-image:radial-gradient(120% 55% at 50% 0,var(--hero),var(--bg) 70%);background-repeat:no-repeat}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:12}
-body.in::before{background:var(--br)}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input{font:inherit}
 button:focus-visible,input:focus-visible{outline:3px solid var(--go);outline-offset:2px}
-.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--br);color:var(--bi);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.appbar small{display:block;opacity:.75;font-size:13px}.appbar b{font-size:20px;font-weight:800}
-.chip{background:rgba(255,255,255,.16);padding:5px 12px;border-radius:99px;font-size:13px;font-weight:600}
-main{padding:12px 14px;max-width:640px;margin:0 auto}
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
-.nav button{flex:1;padding:8px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--mu)}
-.nav button.on{color:var(--br)}
-body.dk .nav button.on{color:#5FC4A8}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);padding:14px 18px 10px;display:flex;justify-content:space-between;align-items:center}
+.appbar small{display:block}.appbar b{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.chip{display:flex;align-items:center;gap:8px;background:var(--sf);box-shadow:var(--sh);padding:5px 14px 5px 5px;border-radius:99px;font-size:13px;font-weight:700}
+.chip i{width:28px;height:28px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-style:normal}
+main{padding:4px 16px 12px;max-width:640px;margin:0 auto}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--sf);border-radius:24px 24px 0 0;box-shadow:0 -6px 24px rgba(20,33,61,.08);display:flex;gap:4px;padding:6px 8px env(safe-area-inset-bottom,0px)}
+.nav button{flex:1;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:700;color:var(--mu);border-radius:16px}
+.nav button.on{color:var(--ac);background:rgba(8,144,125,.12)}
 .nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.bar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:19;padding:8px 14px}
-.bar button{width:100%;max-width:640px;margin:0 auto;display:flex;justify-content:space-between;background:var(--go);color:var(--gi);border-radius:14px;padding:14px 18px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.search{width:100%;font:400 16px inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);margin-bottom:10px}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
-.chips button{flex:none;padding:6px 15px;border-radius:99px;border:1px solid var(--ln);background:var(--sf);font-weight:600;font-size:14px}
-.chips button.on{background:var(--br);color:var(--bi);border-color:var(--br)}
-.prod,.rowb{position:relative;width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:10px 12px;margin-bottom:8px}
-.prod:disabled{opacity:.5}.prod:active:not(:disabled){transform:scale(.985)}
-.prod span,.rowb span{flex:1;min-width:0}
-.prod b,.rowb b{display:block;font-weight:600}
-small{color:var(--mu);font-size:13px}
-.av{flex:none;width:44px;height:44px;border-radius:12px;background:hsl(var(--h) 42% 38%);color:#fff;display:grid;place-items:center;font:800 19px inherit;font-style:normal}
-.badge{background:var(--go);color:var(--gi);min-width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font:800 14px inherit;font-style:normal;padding:0 8px}
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;align-items:flex-end;justify-content:center}
+.bar{position:fixed;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:19;padding:8px 16px}
+.bar button{width:100%;max-width:640px;margin:0 auto;display:flex;justify-content:space-between;background:var(--grad);color:#fff;border-radius:18px;padding:15px 20px;font-weight:800;box-shadow:0 10px 24px rgba(8,144,125,.35)}
+.search{width:100%;font-size:15px;padding:13px 16px;border-radius:16px;border:0;background:var(--sf);box-shadow:var(--sh);color:var(--ink);margin-bottom:12px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px}
+.chips button{flex:none;padding:8px 16px;border-radius:99px;background:var(--sf);box-shadow:var(--sh);font-weight:700;font-size:14px}
+.chips button.on{background:var(--grad);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.pc{position:relative;text-align:left;background:var(--sf);border-radius:20px;padding:10px 10px 12px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:2px}
+.pc:active:not(:disabled){transform:scale(.97)}.pc:disabled{opacity:.5}
+.pe{height:84px;border-radius:14px;background:hsl(var(--h) 80% var(--pl));display:grid;place-items:center;font-size:40px;margin-bottom:8px}
+.pc b{font-weight:700;line-height:1.25}.pc strong{color:var(--ac);font-weight:800;margin-top:2px}
+.pc .badge{position:absolute;top:16px;right:16px}
+.prod,.rowb{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:var(--sf);border-radius:18px;padding:10px 12px;margin-bottom:10px;box-shadow:var(--sh)}
+.prod span,.rowb span{flex:1;min-width:0}.prod b,.rowb b{display:block;font-weight:700}
+small{color:var(--mu);font-size:13px;font-weight:500}
+.av{flex:none;width:48px;height:48px;border-radius:14px;background:hsl(var(--h) 80% var(--pl));display:grid;place-items:center;font-size:24px;font-style:normal}
+.badge{background:var(--go);color:var(--gi);min-width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font-size:14px;font-weight:800;font-style:normal;padding:0 8px}
+.scrim{position:fixed;inset:0;background:rgba(20,33,61,.45);z-index:40;display:none;align-items:flex-end;justify-content:center}
 .scrim.on{display:flex}
-.sheet{background:var(--sf);width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+.sheet{background:var(--sf);width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:28px 28px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+.sheet::before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--ln);margin:-10px auto 14px}
 @keyframes up{from{transform:translateY(40px);opacity:.4}}
 @media(prefers-reduced-motion:reduce){.sheet{animation:none}}
-h2{margin:0 0 8px;font-size:20px;font-weight:800}h3{margin:16px 0 6px;font-size:16px;font-weight:800}
-.line,.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}
+h2{margin:0 0 8px;font-size:21px;font-weight:800}h3{margin:18px 0 8px;font-size:16px;font-weight:800}
+.line,.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0}
 .line{border-bottom:1px solid var(--ln)}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:34px;height:34px;border-radius:50%;border:1px solid var(--ln);font-size:20px;line-height:1}
-.qty span{min-width:22px;text-align:center;font-weight:600}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border-radius:50%;background:var(--bg);font-size:20px;line-height:1;font-weight:700}
+.qty span{min-width:22px;text-align:center;font-weight:800}
 .tot{font-size:26px;font-weight:800;letter-spacing:-.02em}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
-.seg button{padding:10px;border-radius:12px;border:1px solid var(--ln);font-weight:600}
-.seg button.on{background:var(--br);color:var(--bi);border-color:var(--br)}
-label{display:block;font-size:14px;font-weight:600;color:var(--mu);margin:10px 0 0}
-input:not(.search){display:block;width:100%;margin-top:4px;font:600 17px inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--ink)}
-.quick{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-.quick button{padding:7px 12px;border-radius:99px;border:1px solid var(--ln);font-size:14px;font-weight:600}
-.cta{width:100%;margin-top:14px;padding:15px;border-radius:14px;background:var(--go);color:var(--gi);font-weight:800;font-size:17px}
-.cta:disabled{opacity:.45;cursor:not-allowed}
-.ghost{width:100%;margin-top:8px;padding:12px;border-radius:14px;border:1px solid var(--ln);font-weight:600}
-.ghost.danger{color:var(--rd);border-color:var(--rd)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
-.stat{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px}
-.stat b{font-size:18px;font-weight:800}.stat small{display:block}
-.stat.big{grid-column:1/-1;background:var(--br);color:var(--bi);border:0}.stat.big small{color:inherit;opacity:.8}.stat.big b{font-size:30px}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:4px 14px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.seg button{padding:11px;border-radius:14px;background:var(--bg);font-weight:700}
+.seg button.on{background:var(--grad);color:#fff}
+label{display:block;font-size:13px;font-weight:700;color:var(--mu);margin:12px 0 0}
+input:not(.search){display:block;width:100%;margin-top:5px;font-size:16px;font-weight:600;padding:13px 14px;border-radius:14px;border:1.5px solid var(--ln);background:var(--bg);color:var(--ink)}
+input[hidden]{display:none!important}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.quick button{padding:8px 14px;border-radius:99px;background:var(--bg);font-size:14px;font-weight:700}
+.cta{width:100%;margin-top:14px;padding:16px;border-radius:16px;background:var(--grad);color:#fff;font-weight:800;font-size:16px;box-shadow:0 8px 20px rgba(8,144,125,.3)}
+.cta:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+.ghost{width:100%;margin-top:8px;padding:13px;border-radius:16px;background:var(--bg);font-weight:700}
+.ghost.danger{color:var(--rd)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px}
+.stat{background:var(--sf);border-radius:18px;padding:14px;box-shadow:var(--sh)}
+.stat b{font-size:19px;font-weight:800}.stat small{display:block}
+.stat.big{grid-column:1/-1;background:var(--grad);color:#fff;box-shadow:0 10px 24px rgba(8,144,125,.3)}.stat.big small{color:inherit;opacity:.85}.stat.big b{font-size:32px}
+.card{background:var(--sf);border-radius:18px;padding:4px 16px;box-shadow:var(--sh)}
 .card .row{border-bottom:1px solid var(--ln)}.card .row:last-child{border:0}
-.empty{color:var(--mu);padding:14px 0;text-align:center}
-.rc div.r{display:flex;justify-content:space-between;padding:3px 0;font-size:15px}
+.empty{color:var(--mu);padding:16px 0;text-align:center}
+.rc div.r{display:flex;justify-content:space-between;padding:3px 0}
 .ok{text-align:center}
+.qr{text-align:center;background:#fff;border-radius:20px;padding:14px;margin:10px 0;color:#14213D}
+.qr img{width:100%;max-width:280px;display:block;margin:0 auto 8px}
+.qr b{font-size:22px;display:block}.qr small{color:#66768C}
+.qrp{max-width:220px;width:100%;display:block;margin:10px auto;background:#fff;border-radius:12px}
+.up{text-align:center;padding:13px;border-radius:14px;border:1.5px dashed var(--ac);color:var(--ac);font-size:14px;cursor:pointer;margin-top:10px}
 .login{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:28px 24px;max-width:420px;margin:0 auto}
-.logo{width:68px;height:68px;border-radius:20px;background:var(--br);color:var(--bi);display:grid;place-items:center;font-size:34px;margin-bottom:16px}
-.login h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.02em}
-.err{color:var(--rd);min-height:22px;margin:10px 0 0;font-weight:600;font-size:14px}
-.toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:600;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+.logo{width:72px;height:72px;border-radius:24px;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:36px;margin-bottom:18px;box-shadow:0 12px 28px rgba(8,144,125,.35)}
+.login h1{margin:0 0 4px;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.err{color:var(--rd);min-height:22px;margin:10px 0 0;font-weight:700;font-size:14px}
+.toast{position:fixed;left:50%;bottom:140px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
+.mini{padding:7px 12px;border-radius:99px;background:var(--bg);font-size:13px;font-weight:700;white-space:nowrap}.mini.d{color:var(--rd)}
+.pe,.av{overflow:hidden}.pe img,.av img{width:100%;height:100%;object-fit:cover;display:block}
+.pv{width:120px;height:120px;border-radius:20px;margin:6px auto 0;background:var(--bg);display:grid;place-items:center;font-size:52px;overflow:hidden}.pv img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -111,19 +127,20 @@ const IC={kasir:'<path d="M3 5h2l2 10h10l2-7H7"/><circle cx="9" cy="19" r="1.5"/
 const TT={kasir:"Kasir",laporan:"Laporan",produk:"Produk",akun:"Akun"};
 
 function loginHTML(){const first=!users.length;
-return `<form class="login" onsubmit="doLogin(event)"><div class="logo">☕</div><h1>${first?"Buat akun pemilik":"Masuk ke Kasir"}</h1><small>${first?"Akun ini dipakai untuk mengelola produk, laporan, dan kasir.":esc(cfg.shop)}</small>
+return `<form class="login" onsubmit="doLogin(event)"><h1>${first?"Buat akun pemilik":"Masuk ke Kasir"}</h1><small>${first?"Akun ini dipakai untuk mengelola produk, laporan, dan kasir.":esc(cfg.shop)}</small>
 ${first?`<label>Nama kedai<input name="shop" value="Kedai Kopi" autocomplete="organization"></label>`:""}
 <label>Nama pengguna<input name="u" autocomplete="username" autocapitalize="none" required></label>
 <label>Kata sandi<input name="pw" type="password" autocomplete="${first?"new-password":"current-password"}" required></label>
-<p class="err" id="err" role="alert"></p><button class="cta" type="submit">${first?"Buat akun dan masuk":"Masuk"}</button></form>`}
+<p class="err" id="err" role="alert"></p><button class="cta" type="submit">${first?"Buat akun dan masuk":"Masuk"}</button>${first?"":`<button class="ghost danger" type="button" data-act="wipe">${armed?"Tekan lagi: semua data di HP ini akan dihapus":"Lupa kata sandi? Atur ulang aplikasi"}</button>`}</form>`}
 async function doLogin(e){e.preventDefault();const f=e.target,u=f.u.value.trim().toLowerCase(),pw=f.pw.value,er=$("#err");
  if(!users.length){if(!u||pw.length<4){er.textContent="Isi nama pengguna dan kata sandi minimal 4 karakter.";return}
-  cfg.shop=f.shop.value.trim()||"Kedai Kopi";SV("cfg",cfg);users.push({u,h:await hash(u,pw),r:"pemilik"});SV("users",users)}
- else{const h=await hash(u,pw);if(!users.find(y=>y.u===u&&y.h===h)){er.textContent="Nama pengguna atau kata sandi salah.";return}}
+  cfg.shop=f.shop.value.trim()||"Kedai Kopi";SV("cfg",cfg);users.push({u,h:await hash(u,pw.trim()),r:"pemilik"});SV("users",users)}
+ else{const x=users.find(y=>y.u===u);if(!x){er.textContent="Nama pengguna tidak ditemukan di HP ini. Akun tersimpan per perangkat.";return}let good=false;for(const c of[pw,pw.trim()]){if(await hash(u,c)===x.h)good=true}if(!good){er.textContent="Kata sandi salah.";return}}
  me=u;SV("me",u);tab="kasir";render()}
 
+const EM={"Kopi":"☕","Non-kopi":"🧋","Makanan":"🥐"};const em=c=>EM[c]||"🍽️";
 function plist(){const a=prods.filter(p=>(cat==="Semua"||p.c===cat)&&p.n.toLowerCase().includes(q.toLowerCase()));
-return a.length?a.map(p=>{const n=cart[p.id]||0;return `<button class="prod" data-act="add" data-id="${p.id}" ${p.s<=n?"disabled":""}><i class="av" style="--h:${hue(p.c)}">${esc(p.n[0])}</i><span><b>${esc(p.n)}</b><small>${rp(p.p)} · ${p.s<=0?"Habis":"Stok "+p.s}</small></span>${n?`<i class="badge">${n}</i>`:""}</button>`}).join(""):`<p class="empty">Produk tidak ditemukan.</p>`}
+return a.length?`<div class="grid">${a.map(p=>{const n=cart[p.id]||0;return `<button class="pc" data-act="add" data-id="${p.id}" ${p.s<=n?"disabled":""} style="--h:${hue(p.c)}"><span class="pe">${p.img?`<img src="${p.img}" alt="">`:em(p.c)}</span>${n?`<i class="badge">${n}</i>`:""}<b>${esc(p.n)}</b><small>${p.s<=0?"Habis":"Stok "+p.s}</small><strong>${rp(p.p)}</strong></button>`}).join("")}</div>`:`<p class="empty">Produk tidak ditemukan.</p>`}
 const VIEW={
 kasir:()=>`<input class="search" id="q" type="search" placeholder="Cari produk" value="${esc(q)}" aria-label="Cari produk"><div class="chips">${["Semua",...cats()].map(c=>`<button data-act="cat" data-v="${esc(c)}" class="${c===cat?"on":""}">${esc(c)}</button>`).join("")}</div><div id="plist">${plist()}</div>`,
 laporan:()=>{const t=txs.filter(x=>today(x.t)),rev=t.reduce((s,x)=>s+x.total,0),sold={};
@@ -132,19 +149,25 @@ laporan:()=>{const t=txs.filter(x=>today(x.t)),rev=t.reduce((s,x)=>s+x.total,0),
  return `<div class="stats"><div class="stat big"><small>Pendapatan hari ini</small><b>${rp(rev)}</b></div><div class="stat"><small>Transaksi</small><b>${t.length}</b></div><div class="stat"><small>Rata-rata</small><b>${rp(t.length?rev/t.length:0)}</b></div></div>
  <h3>Menu terlaris</h3><div class="card">${top.length?top.map(([n,k])=>`<div class="row"><span>${esc(n)}</span><b>${k} terjual</b></div>`).join(""):`<div class="empty">Belum ada penjualan hari ini.</div>`}</div>
  <h3>Riwayat hari ini</h3>${t.length?t.slice().reverse().map(x=>`<button class="rowb" data-act="rc" data-id="${x.id}"><span><b>#${x.id} · ${hm(x.t)}</b><small>${esc(x.pay)} · ${esc(x.kasir)}${x.note?" · "+esc(x.note):""}</small></span><b style="flex:none">${rp(x.total)}</b></button>`).join(""):`<div class="card"><div class="empty">Transaksi muncul di sini setelah ada pembayaran.</div></div>`}`},
-produk:()=>`<button class="cta" style="margin:0 0 12px" data-act="pform">Tambah produk</button>${prods.map(p=>`<button class="prod" data-act="pform" data-id="${p.id}"><i class="av" style="--h:${hue(p.c)}">${esc(p.n[0])}</i><span><b>${esc(p.n)}</b><small>${esc(p.c)} · Stok ${p.s}</small></span><b>${rp(p.p)}</b></button>`).join("")}`,
+produk:()=>`<button class="cta" style="margin:0 0 12px" data-act="pform">Tambah produk</button>${prods.map(p=>`<button class="prod" data-act="pform" data-id="${p.id}"><i class="av" style="--h:${hue(p.c)}">${p.img?`<img src="${p.img}" alt="">`:em(p.c)}</i><span><b>${esc(p.n)}</b><small>${esc(p.c)} · Stok ${p.s}</small></span><b>${rp(p.p)}</b></button>`).join("")}`,
 akun:()=>{const o=role()==="pemilik";return `<div class="card"><div class="row"><span>Masuk sebagai</span><b>${esc(me)} (${role()})</b></div></div>
 ${o?`<h3>Pengaturan kedai</h3><div class="card" style="padding-bottom:14px"><label>Nama kedai<input id="cs" value="${esc(cfg.shop)}"></label><label>Pajak (%)<input id="ct" inputmode="decimal" value="${cfg.tax}"></label><button class="ghost" data-act="csave">Simpan pengaturan</button></div>
+<h3>QRIS pembayaran</h3><div class="card" style="padding:14px">${cfg.qris?`<img class="qrp" src="${cfg.qris}" alt="QRIS tersimpan">`:`<small>Belum ada QRIS. Unggah foto atau tangkapan layar QRIS toko Anda.</small>`}<label class="up">${cfg.qris?"Ganti gambar QRIS":"Unggah gambar QRIS"}<input id="qf" type="file" accept="image/*" hidden></label>${cfg.qris?`<button class="ghost danger" data-act="qdel">Hapus QRIS</button>`:""}</div>
 <h3>Tambah kasir</h3><div class="card" style="padding-bottom:14px"><label>Nama pengguna<input id="nu" autocapitalize="none"></label><label>Kata sandi<input id="np" type="password"></label><button class="ghost" data-act="uadd">Tambah akun kasir</button></div>
-<h3>Daftar akun</h3><div class="card">${users.map(x=>`<div class="row"><span>${esc(x.u)}</span><small>${x.r}</small></div>`).join("")}</div>`:""}
-<button class="ghost" style="margin-top:18px" data-act="out">Keluar</button>
+<h3>Daftar akun</h3><div class="card">${users.map(x=>`<div class="row"><div><b>${esc(x.u)}</b><small style="display:block">${x.r}</small></div><div style="display:flex;gap:6px"><button class="mini" data-act="pwf" data-v="${esc(x.u)}">Ganti sandi</button>${x.r==="kasir"?`<button class="mini d" data-act="udelf" data-v="${esc(x.u)}">Hapus</button>`:""}</div></div>`).join("")}</div>`:""}
+<button class="ghost" style="margin-top:18px" data-act="pwf" data-v="${esc(me)}">Ganti kata sandi saya</button><button class="ghost" data-act="out">Keluar</button>
 ${o?`<button class="ghost danger" data-act="clr">${armed?"Tekan lagi untuk hapus riwayat":"Hapus riwayat transaksi"}</button>`:""}`}};
 
+let pimg="";
+const phHTML=c=>`<div class="pv">${pimg?`<img src="${pimg}" alt="Foto menu">`:`<span>${em(c)}</span>`}</div>${pimg?`<button class="ghost danger" type="button" data-act="pimgdel">Hapus foto</button>`:""}`;
+function loadPhoto(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement("canvas"),x=c.getContext("2d");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);pimg=c.toDataURL("image/jpeg",.78);$("#pph").innerHTML=phHTML($("#pc").value)};im.onerror=()=>toast("Gambar tidak bisa dibaca");im.src=r.result};r.readAsDataURL(f)}
+const qrBox=t=>cfg.qris?`<div class="qr"><img src="${cfg.qris}" alt="Kode QRIS pembayaran"><b>${rp(t)}</b><small>Minta pelanggan scan dan memasukkan nominal di atas. Pastikan uang sudah masuk sebelum menekan tombol di bawah.</small></div>`:`<div class="qr"><small>QRIS belum diunggah. Pemilik bisa mengunggahnya di tab Akun.</small></div>`;
+function loadQr(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);cfg.qris=c.toDataURL("image/png");SV("cfg",cfg);render();toast("QRIS disimpan")};im.onerror=()=>toast("Gambar tidak bisa dibaca");im.src=r.result};r.readAsDataURL(f)}
 function render(){const r=$("#root");document.body.classList.toggle("in",!!me);
  if(!me){r.innerHTML=loginHTML();$("#bar").hidden=true;return}
  const tabs=role()==="pemilik"?["kasir","laporan","produk","akun"]:["kasir","akun"];
  if(!tabs.includes(tab))tab="kasir";
- r.innerHTML=`<div class="appbar"><div><small>${esc(cfg.shop)}</small><b>${TT[tab]}</b></div><span class="chip">${esc(me)}</span></div><main>${VIEW[tab]()}</main><nav class="nav">${tabs.map(t=>`<button data-act="tab" data-v="${t}" class="${t===tab?"on":""}"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[t]}</svg>${TT[t]}</button>`).join("")}</nav>`;
+ r.innerHTML=`<div class="appbar"><div><small>${esc(cfg.shop)}</small><b>${TT[tab]}</b></div><span class="chip"><i>${esc(me[0].toUpperCase())}</i>${esc(me)}</span></div><main>${VIEW[tab]()}</main><nav class="nav">${tabs.map(t=>`<button data-act="tab" data-v="${t}" class="${t===tab?"on":""}"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[t]}</svg>${TT[t]}</button>`).join("")}</nav>`;
  const n=count();$("#bar").hidden=!(tab==="kasir"&&n>0);$("#bn").textContent=n+" item · Lihat pesanan";$("#bt").textContent=rp(total())}
 
 const open=h=>{$("#sheet").innerHTML=h;$("#scrim").classList.add("on")},close=()=>$("#scrim").classList.remove("on");
@@ -154,8 +177,8 @@ function cartSheet(){const t=total(),opts=[20000,50000,100000,200000].filter(v=>
 <div class="row"><span>Subtotal</span><span>${rp(sub())}</span></div>${dsc()?`<div class="row"><span>Diskon</span><span>−${rp(dsc())}</span></div>`:""}${cfg.tax?`<div class="row"><span>Pajak ${cfg.tax}%</span><span>${rp(tax())}</span></div>`:""}
 <div class="row"><b>Total</b><span class="tot">${rp(t)}</span></div>
 <div class="seg">${["Tunai","QRIS","Kartu"].map(m=>`<button data-act="pay" data-v="${m}" class="${m===pay?"on":""}">${m}</button>`).join("")}</div>
-${pay==="Tunai"?`<input id="cash" inputmode="numeric" placeholder="Uang diterima" value="${cash||""}" aria-label="Uang diterima"><div class="quick"><button data-act="quick" data-v="${t}">Uang pas</button>${opts.map(v=>`<button data-act="quick" data-v="${v}">${rp(v)}</button>`).join("")}</div><div class="row"><span>Kembalian</span><b id="chg"></b></div>`:`<small>Pembayaran ${pay} dianggap lunas sebesar total.</small>`}
-<button class="cta" id="go" data-act="submit">Bayar</button><button class="ghost" data-act="close">Tambah menu</button>`}
+${pay==="Tunai"?`<input id="cash" inputmode="numeric" placeholder="Uang diterima" value="${cash||""}" aria-label="Uang diterima"><div class="quick"><button data-act="quick" data-v="${t}">Uang pas</button>${opts.map(v=>`<button data-act="quick" data-v="${v}">${rp(v)}</button>`).join("")}</div><div class="row"><span>Kembalian</span><b id="chg"></b></div>`:(pay==="QRIS"?qrBox(t):`<small>Pembayaran ${pay} dianggap lunas sebesar total.</small>`)}
+<button class="cta" id="go" data-act="submit">${pay==="QRIS"?"Pembayaran QRIS diterima":"Bayar"}</button><button class="ghost" data-act="close">Tambah menu</button>`}
 function upd(){const t=total(),g=$("#go");if(g)g.disabled=pay==="Tunai"&&cash<t;const c=$("#chg");if(c)c.textContent=cash>=t?rp(cash-t):cash?"Kurang "+rp(t-cash):"–"}
 const showCart=()=>{open(cartSheet());upd()};
 function rcText(x){return [cfg.shop,"Struk #"+x.id+" · "+new Date(x.t).toLocaleString("id-ID"),"Kasir: "+x.kasir+(x.note?" · "+x.note:""),"",...x.items.map(i=>i.q+"x "+i.n+"  "+rp(i.p*i.q)),"","Subtotal  "+rp(x.sub),...(x.disc?["Diskon  -"+rp(x.disc)]:[]),...(x.tax?["Pajak  "+rp(x.tax)]:[]),"Total  "+rp(x.total),x.pay+"  "+rp(x.cash),"Kembali  "+rp(x.change)].join("\n")}
@@ -183,18 +206,28 @@ document.addEventListener("click",async e=>{
  else if(a==="submit")submit();
  else if(a==="rc")rcSheet(txs.find(x=>x.id==id),false);
  else if(a==="share"){const s=rcText(txs.find(x=>x.id==id));try{if(navigator.share)await navigator.share({text:s});else{await navigator.clipboard.writeText(s);toast("Struk disalin")}}catch(er){toast("Struk tidak dapat dibagikan")}}
- else if(a==="pform"){const p=prod(id)||{n:"",p:"",c:"Kopi",s:50};
-  open(`<h2>${id?"Ubah produk":"Produk baru"}</h2><label>Nama produk<input id="pn" value="${esc(p.n)}"></label><label>Harga (Rp)<input id="pp" inputmode="numeric" value="${p.p}"></label><label>Kategori<input id="pc" list="cl" value="${esc(p.c)}"></label><datalist id="cl">${cats().map(c=>`<option value="${esc(c)}">`).join("")}</datalist><label>Stok<input id="ps" inputmode="numeric" value="${p.s}"></label><button class="cta" data-act="psave" data-id="${id||""}">Simpan produk</button>${id?`<button class="ghost danger" data-act="pdel" data-id="${id}">Hapus produk</button>`:""}<button class="ghost" data-act="close">Batal</button>`)}
+ else if(a==="pform"){const p=prod(id)||{n:"",p:"",c:"Kopi",s:50};pimg=p.img||"";
+  open(`<h2>${id?"Ubah produk":"Produk baru"}</h2><div id="pph">${phHTML(p.c)}</div><label class="up">${"Pilih foto menu"}<input id="pf" type="file" accept="image/*" hidden></label><label>Nama produk<input id="pn" value="${esc(p.n)}"></label><label>Harga (Rp)<input id="pp" inputmode="numeric" value="${p.p}"></label><label>Kategori<input id="pc" list="cl" value="${esc(p.c)}"></label><datalist id="cl">${cats().map(c=>`<option value="${esc(c)}">`).join("")}</datalist><label>Stok<input id="ps" inputmode="numeric" value="${p.s}"></label><button class="cta" data-act="psave" data-id="${id||""}">Simpan produk</button>${id?`<button class="ghost danger" data-act="pdel" data-id="${id}">Hapus produk</button>`:""}<button class="ghost" data-act="close">Batal</button>`)}
+ else if(a==="pimgdel"){pimg="";$("#pph").innerHTML=phHTML($("#pc").value)}
  else if(a==="psave"){const n=$("#pn").value.trim(),pr=+$("#pp").value.replace(/\D/g,""),c=$("#pc").value.trim()||"Lainnya",s=+$("#ps").value.replace(/\D/g,"");
   if(!n||!pr){toast("Isi nama dan harga");return}
-  const p=prod(id);if(p)Object.assign(p,{n,p:pr,c,s});else prods.push({id:Date.now(),n,p:pr,c,s});
+  const p=prod(id);if(p)Object.assign(p,{n,p:pr,c,s,img:pimg});else prods.push({id:Date.now(),n,p:pr,c,s,img:pimg});
   SV("prods",prods);close();render()}
  else if(a==="pdel"){prods=prods.filter(p=>p.id!=id);delete cart[id];SV("prods",prods);close();render()}
  else if(a==="csave"){cfg.shop=$("#cs").value.trim()||"Kedai Kopi";cfg.tax=Math.max(0,Math.min(100,+$("#ct").value.replace(",",".")||0));SV("cfg",cfg);render();toast("Pengaturan disimpan")}
  else if(a==="uadd"){const u=$("#nu").value.trim().toLowerCase(),pw=$("#np").value;
   if(!u||pw.length<4){toast("Isi nama dan sandi minimal 4 karakter");return}
   if(users.find(x=>x.u===u)){toast("Nama pengguna sudah dipakai");return}
-  users.push({u,h:await hash(u,pw),r:"kasir"});SV("users",users);render();toast("Akun kasir ditambahkan")}
+  users.push({u,h:await hash(u,pw.trim()),r:"kasir"});SV("users",users);render();toast("Akun kasir ditambahkan")}
+ else if(a==="qdel"){delete cfg.qris;SV("cfg",cfg);render()}
+ else if(a==="wipe"){if(armed){["users","prods","tx","cfg","me"].forEach(k=>{try{localStorage.removeItem("kk_"+k)}catch(e){}});users=[];prods=D;txs=[];cfg={shop:"Kedai Kopi",tax:0};me=null;armed=false}else armed=true;render()}
+ else if(a==="pwf"){open(`<h2>Ganti sandi: ${esc(v)}</h2>${v===me?`<label>Kata sandi lama<input id="opw" type="password"></label>`:""}<label>Kata sandi baru<input id="npw" type="password"></label><p class="err" id="perr" role="alert"></p><button class="cta" data-act="pwsave" data-v="${esc(v)}">Simpan kata sandi</button><button class="ghost" data-act="close">Batal</button>`)}
+ else if(a==="pwsave"){const x=users.find(y=>y.u===v),np=$("#npw").value.trim(),er=$("#perr");if(!x)return;
+  if(v===me){const o=$("#opw").value;if(await hash(v,o.trim())!==x.h&&await hash(v,o)!==x.h){er.textContent="Kata sandi lama salah.";return}}
+  if(np.length<4){er.textContent="Kata sandi baru minimal 4 karakter.";return}
+  x.h=await hash(v,np);SV("users",users);close();toast("Kata sandi diganti")}
+ else if(a==="udelf"){open(`<h2>Hapus akun ${esc(v)}?</h2><small>Akun ini tidak bisa masuk lagi. Riwayat transaksinya tetap tersimpan.</small><button class="cta" style="background:var(--rd)" data-act="udel" data-v="${esc(v)}">Hapus akun</button><button class="ghost" data-act="close">Batal</button>`)}
+ else if(a==="udel"){users=users.filter(y=>y.u!==v||y.r==="pemilik");SV("users",users);close();render();toast("Akun dihapus")}
  else if(a==="out"){me=null;SV("me",null);cart={};render()}
  else if(a==="clr"){if(armed){txs=[];SV("tx",txs);armed=false;toast("Riwayat dihapus")}else armed=true;render()}
 });
@@ -203,7 +236,9 @@ document.addEventListener("input",e=>{const i=e.target.id;
  else if(i==="cash"){cash=+e.target.value.replace(/\D/g,"")||0;upd()}});
 document.addEventListener("change",e=>{const i=e.target.id;
  if(i==="dc"){disc=+e.target.value.replace(/\D/g,"")||0;render();showCart()}
- else if(i==="nt")note=e.target.value});
+ else if(i==="nt")note=e.target.value;
+ else if(i==="qf")loadQr(e.target.files[0]);
+ else if(i==="pf")loadPhoto(e.target.files[0])});
 render();
 </script>
 </body>
